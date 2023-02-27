@@ -5,7 +5,7 @@ function repeatedGroups(arr) {
   let returnArr = [];
   let cache = [];
 
-  for (let i = 1; i < arr.length; i++) {
+  for (let i = 1; i < arr.length; i++) { // identifying all repeated values and adding themn to cache
     if (arr[i] === arr[i-1] && !cache.includes(arr[i])) { 
       cache.push(arr[i-1], arr[i])
     } else if (arr[i] === arr[i-1]) { 
@@ -15,8 +15,8 @@ function repeatedGroups(arr) {
 
   let cache2;
 
-  function splitArr(cache, cache2) {
-    if (cache.length === 0) {
+  function splitArr(cache, cache2) { // move cached values into the returnArr, separated into arrays by value
+    if (cache.length === 0) { // base case
       returnArr.push(cache2)
       return
     }
@@ -26,7 +26,7 @@ function repeatedGroups(arr) {
     } else if (cache2[cache2.length-1] === cache[0]) { //  add a duplicate number to cache2 
       cache2.push(cache[0])
       cache.shift()
-    } else if (!cache2.includes(cache[0])) { //  if you're looking at a new number and this isn't the first number
+    } else if (!cache2.includes(cache[0])) { //  new number and NOT first loop
       returnArr.push(cache2)
       cache2 = [cache[0]];
       cache.shift()
