@@ -13,6 +13,7 @@ async function typeMatchup(t) {
   // in: t, which is a string. only accepted strings are pokemon types
   // out: a string which reads `Weak against ${types here}. Strong against ${types here}.`
 
+  // dictionary of types to minimize compute cost if invalid parameter
   const types = {
     normal: 1,
     fire: 10,
@@ -34,6 +35,7 @@ async function typeMatchup(t) {
     fairy: 18,
   };
 
+  // parameter validation
   if (!types[t.toLowerCase()]) {
     return "invalid input";
   }
@@ -41,12 +43,15 @@ async function typeMatchup(t) {
   const response = await fetch(`https://pokeapi.co/api/v2/type/${t}`);
   const res_types = await response.json();
 
+  // make t input capital for string output. Example: "fire" --> "Fire"
+  t = t[0].toUpperCase() + t.slice(1);
+
+  // get list of type weaknesses into an array
   const weakness = res_types.damage_relations.double_damage_from.map(
     (type) => type.name
   );
 
-  t = t[0].toUpperCase() + t.slice(1);
-
+  // create the weakness string
   const weakStr =
     `${t} is weak against` +
     weakness.map((el) => " " + el).slice(0, -1) +
@@ -54,10 +59,12 @@ async function typeMatchup(t) {
     weakness.slice(-1) +
     ".  ";
 
+  // get list of type strengths into an array
   const strengths = res_types.damage_relations.double_damage_to.map(
     (type) => type.name
   );
 
+  // create the strengths string
   const strongStr =
     `${t} is strong against` +
     strengths.map((el) => " " + el).slice(0, -1) +
@@ -67,7 +74,7 @@ async function typeMatchup(t) {
   console.log(weakStr);
   console.log(strongStr);
 
-  return strongStr, weakStr;
+  return weakStr, strongStr;
 }
 
 console.log(typeMatchup("josh"));
