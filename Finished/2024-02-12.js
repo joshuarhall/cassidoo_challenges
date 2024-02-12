@@ -1,23 +1,17 @@
 // Write a function that produces a generator that produces values in a range.
 
 // Example:
-
 // let range = fromTo(0,3)
-// range()
-// 0
-// range()
-// 1
-// range()
-// 2
-// range()
-// null
+// range() // 0
+// range() // 1
+// range() // 2
+// range() // null
 
 const fromTo = (a, b) => {
   return () => (a < b ? a++ : null);
 };
 
 const range = fromTo(0, 3);
-
 console.log(range());
 console.log(range());
 console.log(range());
