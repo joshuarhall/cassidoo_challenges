@@ -9,7 +9,7 @@ const squares = (n) => {
 };
 
 // recursion!
-const squaresRec = (n) => (n > 0 ? Math.pow(n, 2) + squares(n - 1) : 1);
+const squaresRec = (n) => (n > 1 ? Math.pow(n, 2) + squaresRec(n - 1) : 1);
 
 console.log(squares(5)); // 55
 console.log(squares(10)); // 385
